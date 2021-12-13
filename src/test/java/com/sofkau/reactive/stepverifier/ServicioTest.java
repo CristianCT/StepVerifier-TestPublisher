@@ -48,5 +48,21 @@ public class ServicioTest {
             .expectErrorMatches(throwable -> throwable instanceof IllegalArgumentException &&
                     throwable.getMessage().equals("Mensaje de Error")
             );
+
+        /* Publicadores Basados en Tiempo
+        Por ejemplo, suponga que en nuestra aplicación de la vida real, tenemos un retraso de un día entre eventos.
+        Ahora, obviamente, no queremos que nuestras pruebas se ejecuten durante todoun día para verificar el
+        comportamiento esperado con tal retraso. El constructor StepVerifier.withVirtualTime está diseñado para
+        evitar pruebas de larga duración.
+        
+        StepVerifier
+          .withVirtualTime(() -> Flux.interval(Duration.ofSeconds(1)).take(2))
+          .expectSubscription()
+          .expectNoEvent(Duration.ofSeconds(1))
+          .expectNext(0L)
+          .thenAwait(Duration.ofSeconds(1))
+          .expectNext(1L)
+          .verifyComplete(); */
+
     }
 }
